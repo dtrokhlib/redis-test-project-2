@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Hit an API</h1>
+  <button id="api1">Hit API 1</button>
+  <button id="api2">Hit API 2</button>
+  <button id="api3">Hit API 3</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    const api1 = document.getElementById('api1');
+    const api2 = document.getElementById('api2');
+    const api3 = document.getElementById('api3');
+    const output = document.getElementById('output');
+
+    api1.addEventListener('click', () => hitApi(1));
+    api2.addEventListener('click', () => hitApi(2));
+    api3.addEventListener('click', () => hitApi(3));
+
+    async function hitApi(id) {
+      const res = await fetch(`/api${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const resParsed = await res.json();
+
+      output.innerHTML += `\nResponse: ${resParsed.response} Calls = ${resParsed.callsInAMinute} TTL=${resParsed.ttl}`;
+    }
+  </script>
+</body>
+
+</html>
